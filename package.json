@@ -3,24 +3,47 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "npx dotenv-cli -e .env.local -- tsx drizzle/seed.ts"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "next": "16.2.9",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@auth/drizzle-adapter": "^1.11.2",
+    "@neondatabase/serverless": "^1.1.0",
+    "@react-pdf/renderer": "^4.5.1",
+    "@sanity/vision": "^6.1.0",
     "@tailwindcss/postcss": "^4",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-pdf": "^6.2.0",
+    "dotenv-cli": "^11.0.0",
+    "drizzle-kit": "^0.31.10",
+    "drizzle-orm": "^0.45.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "install": "^0.13.0",
+    "next-auth": "^5.0.0-beta.31",
+    "next-sanity": "^13.1.0",
+    "npm": "^11.17.0",
+    "sanity": "^6.1.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "^4.22.4",
+    "typescript": "^5",
+    "zod": "^4.4.3",
+    "zustand": "^5.0.14"
   }
 }
