@@ -1,5 +1,6 @@
 import { getOrderById } from '@/services/order.service'
 import { formatNaira } from '@/lib/utils'
+import { RefreshButton } from '@/components/shop/RefreshButton'
 
 interface Props {
   searchParams: Promise<{ orderId?: string }>
@@ -86,7 +87,9 @@ async function OrderDetails({ orderId }: { orderId: string }) {
           </p>
         </div>
       </div>
-
+      <div className="flex justify-end mb-6">
+        <RefreshButton />
+      </div>
       {order.status !== 'cancelled' && <StatusTimeline status={order.status} />}
 
       <div className="grid md:grid-cols-2 gap-8 mb-8">
