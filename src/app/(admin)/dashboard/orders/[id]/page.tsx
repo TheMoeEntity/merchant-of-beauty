@@ -8,6 +8,7 @@ import {
   generateInvoiceAction,
 } from '@/actions/admin.actions'
 import { OrderStatus } from '@/types/order.types'
+import Link from 'next/link'
 
 interface Props {
   params: Promise<{ id: string }>
@@ -111,16 +112,27 @@ export default async function OrderDetailPage({ params }: Props) {
             <h2 className="text-xs uppercase tracking-widest text-[var(--color-muted)] mb-3">
               Invoice
             </h2>
+
             {invoice ? (
-              <p className="text-sm text-[var(--color-ink)]">
-                Invoice <span className="font-display">{invoice.id}</span>{' '}
-                generated on{' '}
-                {new Date(invoice.issuedAt).toLocaleDateString('en-NG', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                })}
-              </p>
+              <div>
+                <p className="text-sm text-[var(--color-ink)] mb-3">
+                  Invoice <span className="font-display">{invoice.id}</span>{' '}
+                  generated on{' '}
+                  {new Date(invoice.issuedAt).toLocaleDateString('en-NG', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
+                </p>
+                <Link
+                  href={`/api/invoices/${order.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block border border-[var(--color-ink)] text-[var(--color-ink)] px-4 py-2 text-sm hover:bg-[var(--color-ink)] hover:text-[var(--color-surface)] transition-colors"
+                >
+                  View Invoice PDF
+                </Link>
+              </div>
             ) : (
               <form action={generateInvoiceAction}>
                 <input type="hidden" name="orderId" value={order.id} />

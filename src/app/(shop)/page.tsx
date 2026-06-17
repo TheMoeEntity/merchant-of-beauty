@@ -61,14 +61,14 @@ async function HeroSection() {
 
   return (
     <section className="max-w-7xl mx-auto px-4 pt-6 grid grid-cols-3 gap-2 md:gap-4">
-      <div className="grid grid-rows-2 gap-4">
+      <div className="grid grid-rows-2 gap-1 md:gap-4">
         <HeroTile tile={hero.leftTop} priority />
         <HeroTile tile={hero.leftBottom} />
       </div>
 
       <HeroTile tile={hero.center} tall priority />
 
-      <div className="grid grid-rows-2 gap-4">
+      <div className="grid grid-rows-2 gap-1 md:gap-4">
         <HeroTile tile={hero.rightTop} priority />
         <HeroTile tile={hero.rightBottom} />
       </div>
