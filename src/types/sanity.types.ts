@@ -24,3 +24,21 @@ export interface SanityCategory {
     title: string
     slug: { current: string }
 }
+export interface SiteSettings {
+    storeName: string
+    contactEmail: string | null
+    contactPhone: string | null
+    address: string | null
+    instagram: string | null
+    twitter: string | null
+    facebook: string | null
+}
+
+export interface HeroBanner {
+    _id: string
+    headline: string
+    subtext: string | null
+    ctaText: string | null
+    ctaLink: string | null
+    image: SanityImage | null
+}
