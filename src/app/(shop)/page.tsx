@@ -4,6 +4,8 @@ import { Suspense } from 'react'
 import ProductCard from '@/components/shop/ProductCard'
 import { getFeaturedProducts, getHeroBanner } from '@/sanity/queries'
 import { urlFor } from '@/sanity/lib/image'
+import { getProducts } from '@/sanity/queries'
+import { CategoryStrip } from '@/components/shop/CategoryStrip'
 
 function HeroTile({
   tile,
@@ -43,7 +45,7 @@ function HeroTile({
       {tile.ctaText && (
         <Link
           href={tile.ctaLink ?? '/products'}
-          className="absolute bottom-4 left-4 bg-[var(--color-card)] text-[var(--color-ink)] text-xs font-medium px-4 py-2 hover:bg-[var(--color-gold)] hover:text-[var(--color-ink)] transition-colors"
+          className="absolute bottom-4 left-4 bg-[var(--color-card)] text-[var(--color-ink)] text-xs font-medium px-4 py-1 md:py-2 hover:bg-[var(--color-gold)] hover:text-[var(--color-ink)] transition-colors"
         >
           {tile.ctaText}
         </Link>
@@ -58,7 +60,7 @@ async function HeroSection() {
   if (!hero) return null
 
   return (
-    <section className="max-w-7xl mx-auto px-4 pt-6 grid grid-cols-3 gap-4">
+    <section className="max-w-7xl mx-auto px-4 pt-6 grid grid-cols-3 gap-2 md:gap-4">
       <div className="grid grid-rows-2 gap-4">
         <HeroTile tile={hero.leftTop} priority />
         <HeroTile tile={hero.leftBottom} />
@@ -74,6 +76,37 @@ async function HeroSection() {
   )
 }
 
+async function NewArrivals() {
+  const products = (await getProducts()).slice(0, 8)
+
+  if (!products.length) return null
+
+  return (
+    <section className="max-w-7xl mx-auto px-6 py-20">
+      <div className="flex items-end justify-between mb-10">
+        <div>
+          <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-gold-dark)] mb-2">
+            Just In
+          </p>
+          <h2 className="font-display text-3xl text-[var(--color-ink)]">
+            New Arrivals
+          </h2>
+        </div>
+        <Link
+          href="/products"
+          className="rounded-full border border-[var(--color-ink)] px-5 py-2 text-xs uppercase tracking-wider text-[var(--color-ink)] hover:bg-[var(--color-ink)] hover:text-[var(--color-surface)] transition-colors"
+        >
+          All Products
+        </Link>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {products.map((product) => (
+          <ProductCard key={product._id} product={product} />
+        ))}
+      </div>
+    </section>
+  )
+}
 async function FeaturedProducts() {
   const products = await getFeaturedProducts()
 
@@ -145,8 +178,12 @@ export default function HomePage() {
       <Suspense fallback={<HeroSkeleton />}>
         <HeroSection />
       </Suspense>
+      <CategoryStrip />
       <Suspense fallback={<FeaturedSkeleton />}>
         <FeaturedProducts />
+      </Suspense>
+      <Suspense fallback={<FeaturedSkeleton />}>
+        <NewArrivals />
       </Suspense>
     </>
   )

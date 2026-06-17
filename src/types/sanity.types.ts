@@ -23,6 +23,7 @@ export interface SanityCategory {
   _id: string
   title: string
   slug: { current: string }
+  icon?: SanityImage
 }
 export interface SiteSettings {
   storeName: string

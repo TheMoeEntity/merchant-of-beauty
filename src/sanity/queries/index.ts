@@ -57,7 +57,7 @@ export async function getProductsByCategory(
 
 export async function getCategories(): Promise<SanityCategory[]> {
   return client.fetch(
-    groq`*[_type == "category"] | order(title asc)`,
+    groq`*[_type == "category"] | order(title asc){ _id, title, slug, icon }`,
     {},
     { next: { tags: ['categories'] } }
   )

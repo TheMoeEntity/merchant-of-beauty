@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useCartStore } from '@/store/cart.store'
 import { useCartDrawer } from '@/store/cart-drawer.store'
+import { ShoppingBag } from 'lucide-react'
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -33,14 +34,15 @@ export default function Navbar() {
           href="/"
           className="font-display text-2xl text-ink absolute left-1/2 -translate-x-1/2"
         >
-          Merchant of Beauty
+          <span className="hidden md:block">Merchant of Beauty</span>
+          <span className="md:hidden">M.O.B</span>
         </Link>
 
         <button
           onClick={openCart}
           className="relative flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ink transition-colors hover:text-gold"
         >
-          Cart
+          <ShoppingBag />
           {itemCount > 0 && (
             <span className="flex size-5 items-center justify-center rounded-full bg-gold text-[10px] font-bold text-ink">
               {itemCount}
