@@ -1,7 +1,7 @@
 'use client'
 
-import { useCartDrawer } from '@/store/cart-drawer.store'
 import { useCartStore } from '@/store/cart.store'
+import { useCartDrawer } from '@/store/cart-drawer.store'
 import { SanityProduct } from '@/types/sanity.types'
 
 interface Props {
@@ -20,7 +20,7 @@ export default function AddToCartButton({ product }: Props) {
   return (
     <button
       onClick={handleAdd}
-      className="w-full bg-[var(--color-plum)] text-[var(--color-ivory)] py-3 px-6 text-sm font-medium hover:bg-[var(--color-brass)] transition-colors"
+      className="w-full bg-[var(--color-ink)] text-[var(--color-surface)] py-3 px-6 text-sm font-medium hover:bg-[var(--color-gold)] hover:text-[var(--color-ink)] transition-colors"
     >
       Add to Cart
     </button>

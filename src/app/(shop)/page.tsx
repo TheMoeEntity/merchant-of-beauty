@@ -17,7 +17,7 @@ function HeroTile({
   if (!tile?.image)
     return (
       <div
-        className={`bg-[var(--color-blush-light)] ${tall ? 'h-full' : 'aspect-[4/3]'}`}
+        className={`bg-[var(--color-gold-light)] ${tall ? 'h-full' : 'aspect-[4/3]'}`}
       />
     )
 
@@ -43,7 +43,7 @@ function HeroTile({
       {tile.ctaText && (
         <Link
           href={tile.ctaLink ?? '/products'}
-          className="absolute bottom-4 left-4 bg-[var(--color-card)] text-[var(--color-ink)] text-xs font-medium px-4 py-2 hover:bg-[var(--color-brass)] hover:text-[var(--color-surface)] transition-colors"
+          className="absolute bottom-4 left-4 bg-[var(--color-card)] text-[var(--color-ink)] text-xs font-medium px-4 py-2 hover:bg-[var(--color-gold)] hover:text-[var(--color-ink)] transition-colors"
         >
           {tile.ctaText}
         </Link>
@@ -73,6 +73,7 @@ async function HeroSection() {
     </section>
   )
 }
+
 async function FeaturedProducts() {
   const products = await getFeaturedProducts()
 
@@ -82,16 +83,16 @@ async function FeaturedProducts() {
     <section className="max-w-7xl mx-auto px-6 py-20">
       <div className="flex items-end justify-between mb-10">
         <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-brass)] mb-2">
+          <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-gold-dark)] mb-2">
             Handpicked
           </p>
-          <h2 className="font-display text-3xl text-[var(--color-plum)]">
+          <h2 className="font-display text-3xl text-[var(--color-ink)]">
             Featured Products
           </h2>
         </div>
         <Link
           href="/products"
-          className="text-sm text-[var(--color-brass)] hover:text-[var(--color-brass-dark)] transition-colors"
+          className="text-sm text-[var(--color-gold-dark)] hover:text-[var(--color-ink)] transition-colors"
         >
           View All →
         </Link>
@@ -109,13 +110,13 @@ function HeroSkeleton() {
   return (
     <section className="max-w-7xl mx-auto px-4 pt-6 grid grid-cols-3 gap-4">
       <div className="grid grid-rows-2 gap-4">
-        <div className="aspect-[4/3] bg-[var(--color-blush-light)] animate-pulse" />
-        <div className="aspect-[4/3] bg-[var(--color-blush-light)] animate-pulse" />
+        <div className="aspect-[4/3] bg-[var(--color-gold-light)] animate-pulse" />
+        <div className="aspect-[4/3] bg-[var(--color-gold-light)] animate-pulse" />
       </div>
-      <div className="bg-[var(--color-blush-light)] animate-pulse" />
+      <div className="bg-[var(--color-gold-light)] animate-pulse" />
       <div className="grid grid-rows-2 gap-4">
-        <div className="aspect-[4/3] bg-[var(--color-blush-light)] animate-pulse" />
-        <div className="aspect-[4/3] bg-[var(--color-blush-light)] animate-pulse" />
+        <div className="aspect-[4/3] bg-[var(--color-gold-light)] animate-pulse" />
+        <div className="aspect-[4/3] bg-[var(--color-gold-light)] animate-pulse" />
       </div>
     </section>
   )
@@ -124,13 +125,13 @@ function HeroSkeleton() {
 function FeaturedSkeleton() {
   return (
     <section className="max-w-7xl mx-auto px-6 py-20">
-      <div className="h-8 w-48 bg-[var(--color-plum)]/10 rounded animate-pulse mb-10" />
+      <div className="h-8 w-48 bg-[var(--color-ink)]/10 rounded animate-pulse mb-10" />
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {Array.from({ length: 4 }).map((_, i) => (
           <div key={i} className="space-y-3">
-            <div className="aspect-square bg-[var(--color-plum)]/10 rounded animate-pulse" />
-            <div className="h-4 bg-[var(--color-plum)]/10 rounded animate-pulse" />
-            <div className="h-4 w-2/3 bg-[var(--color-plum)]/10 rounded animate-pulse" />
+            <div className="aspect-square bg-[var(--color-ink)]/10 rounded animate-pulse" />
+            <div className="h-4 bg-[var(--color-ink)]/10 rounded animate-pulse" />
+            <div className="h-4 w-2/3 bg-[var(--color-ink)]/10 rounded animate-pulse" />
           </div>
         ))}
       </div>

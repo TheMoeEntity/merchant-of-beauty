@@ -25,10 +25,10 @@ export default async function ProductPage({ params }: Props) {
         <ProductGallery images={product.images} title={product.title} />
 
         <div className="flex flex-col justify-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-brass)] mb-3">
+          <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-gold-dark)] mb-3">
             {product.category.title}
           </p>
-          <h1 className="font-display text-4xl text-[var(--color-plum)] mb-4">
+          <h1 className="font-display text-4xl text-[var(--color-ink)] mb-4">
             {product.title}
           </h1>
           <p className="text-2xl text-[var(--color-ink)] mb-6">
@@ -43,7 +43,7 @@ export default async function ProductPage({ params }: Props) {
 
           <div className="mb-6">
             {product.inStock ? (
-              <span className="text-xs text-[var(--color-sage)] uppercase tracking-widest">
+              <span className="text-xs text-[var(--color-success)] uppercase tracking-widest">
                 ● In Stock
               </span>
             ) : (

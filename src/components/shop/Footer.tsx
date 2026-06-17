@@ -5,28 +5,31 @@ export async function Footer() {
   const settings = await getSiteSettings()
 
   return (
-    <footer className="mt-20 border-t border-[var(--color-ink)]/10 bg-[var(--color-blush-light)]/40">
+    <footer className="mt-20 border-t border-[var(--color-ink)]/10 bg-[var(--color-gold-light)]/40">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-3">
         <div>
-          <h3 className="font-display text-xl text-[var(--color-plum)]">
+          <h3 className="font-display text-xl text-[var(--color-ink)]">
             {settings?.storeName ?? 'Merchant of Beauty'}
           </h3>
           <ul className="mt-4 space-y-2 text-sm text-[var(--color-muted)]">
             <li>
-              <Link href="/" className="hover:text-[var(--color-brass)]">
+              <Link href="/" className="hover:text-[var(--color-gold-dark)]">
                 Home
               </Link>
             </li>
             <li>
               <Link
                 href="/products"
-                className="hover:text-[var(--color-brass)]"
+                className="hover:text-[var(--color-gold-dark)]"
               >
                 Shop
               </Link>
             </li>
             <li>
-              <Link href="/about" className="hover:text-[var(--color-brass)]">
+              <Link
+                href="/about"
+                className="hover:text-[var(--color-gold-dark)]"
+              >
                 About Us
               </Link>
             </li>

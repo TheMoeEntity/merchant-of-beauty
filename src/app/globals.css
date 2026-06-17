@@ -1,37 +1,35 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --color-ink: #2B2024;
-  --color-surface: #FBF7F4;
-  --color-card: #FFFFFF;
-  --color-blush: #E8C5BC;
-  --color-blush-light: #F5E6E1;
-  --color-brass: #A87E4F;
-  --color-brass-dark: #8A6539;
-  --color-plum: #5C3A4D;
-  --color-plum-dark: #462C3B;
-  --color-sage: #7D8C72;
-  --color-sage-light: #EAEEE6;
-  --color-muted: #8C7F83;
+  --color-ink: #0a0a0a;
+  --color-surface: #ffffff;
+  --color-card: #ffffff;
+  --color-muted: #6b6b6b;
+  --color-success: #5c8a5c;
+  --color-gold: #c9a24b;
+  --color-gold-dark: #a8842f;
+  --color-gold-light: #f3e9d2;
+  --color-success-light: #e8f0e8;
+  --color-charcoal: #181818;
 
-  --color-status-pending: #B08D57;
-  --color-status-pending-bg: #F6EEDF;
-  --color-status-confirmed: #6B7FA3;
-  --color-status-confirmed-bg: #E9EDF5;
-  --color-status-processing: #8A6B9E;
-  --color-status-processing-bg: #F0EAF5;
-  --color-status-shipped: #A87E4F;
-  --color-status-shipped-bg: #F5EDE3;
-  --color-status-delivered: #7D8C72;
-  --color-status-delivered-bg: #EAEEE6;
-  --color-status-cancelled: #A35D5D;
-  --color-status-cancelled-bg: #F5E7E7;
+  --color-status-pending: #b08d57;
+  --color-status-pending-bg: #f6eedf;
+  --color-status-confirmed: #6b7fa3;
+  --color-status-confirmed-bg: #e9edf5;
+  --color-status-processing: #8a6b9e;
+  --color-status-processing-bg: #f0eaf5;
+  --color-status-shipped: #c9a24b;
+  --color-status-shipped-bg: #f3e9d2;
+  --color-status-delivered: #5c8a5c;
+  --color-status-delivered-bg: #e6f0e6;
+  --color-status-cancelled: #a35d5d;
+  --color-status-cancelled-bg: #f5e7e7;
 
-  --font-display: "DM Serif Display", Georgia, serif;
-  --font-sans: "Manrope", system-ui, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
 
-  --shadow-soft: 0 1px 3px rgb(43 32 36 / 0.04), 0 8px 24px rgb(43 32 36 / 0.06);
-  --shadow-lifted: 0 2px 6px rgb(43 32 36 / 0.06), 0 16px 40px rgb(43 32 36 / 0.10);
+  --shadow-soft: 0 1px 3px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06);
+  --shadow-lifted: 0 2px 6px rgb(0 0 0 / 0.08), 0 16px 40px rgb(0 0 0 / 0.12);
 }
 
 body {
@@ -39,4 +37,8 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+a,
+button {
+  cursor: pointer !important;
 }

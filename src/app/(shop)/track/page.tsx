@@ -24,8 +24,8 @@ function StatusTimeline({ status }: { status: string }) {
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-colors ${
                 i <= currentIndex
-                  ? 'bg-[var(--color-plum)] text-[var(--color-ivory)]'
-                  : 'bg-[var(--color-plum)]/10 text-[var(--color-muted)]'
+                  ? 'bg-[var(--color-ink)] text-[var(--color-surface)]'
+                  : 'bg-[var(--color-ink)]/10 text-[var(--color-muted)]'
               }`}
             >
               {i < currentIndex ? '✓' : i + 1}
@@ -38,8 +38,8 @@ function StatusTimeline({ status }: { status: string }) {
             <div
               className={`h-0.5 flex-1 mx-1 transition-colors ${
                 i < currentIndex
-                  ? 'bg-[var(--color-plum)]'
-                  : 'bg-[var(--color-plum)]/10'
+                  ? 'bg-[var(--color-ink)]'
+                  : 'bg-[var(--color-ink)]/10'
               }`}
             />
           )}
@@ -69,7 +69,7 @@ async function OrderDetails({ orderId }: { orderId: string }) {
           <p className="text-xs uppercase tracking-widest text-[var(--color-muted)] mb-1">
             Order
           </p>
-          <h2 className="font-display text-3xl text-[var(--color-plum)]">
+          <h2 className="font-display text-3xl text-[var(--color-ink)]">
             {order.id}
           </h2>
         </div>
@@ -136,9 +136,9 @@ async function OrderDetails({ orderId }: { orderId: string }) {
                 </span>
               </div>
             ))}
-            <div className="border-t border-[var(--color-plum)]/10 pt-3 flex justify-between font-medium">
-              <span className="text-[var(--color-plum)]">Total</span>
-              <span className="font-display text-lg text-[var(--color-plum)]">
+            <div className="border-t border-[var(--color-ink)]/10 pt-3 flex justify-between font-medium">
+              <span className="text-[var(--color-ink)]">Total</span>
+              <span className="font-display text-lg text-[var(--color-ink)]">
                 {formatNaira(order.totalAmount)}
               </span>
             </div>
@@ -155,10 +155,10 @@ export default async function TrackPage({ searchParams }: Props) {
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">
       <div className="mb-10">
-        <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-brass)] mb-2">
+        <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-gold-dark)] mb-2">
           Track
         </p>
-        <h1 className="font-display text-4xl text-[var(--color-plum)]">
+        <h1 className="font-display text-4xl text-[var(--color-ink)]">
           Your Order
         </h1>
       </div>
@@ -168,11 +168,11 @@ export default async function TrackPage({ searchParams }: Props) {
           <input
             name="orderId"
             placeholder="Enter your Order ID e.g. ORD-ABC123"
-            className="flex-1 border border-[var(--color-plum)]/20 px-4 py-2.5 text-sm focus:outline-none focus:border-[var(--color-brass)] transition-colors"
+            className="flex-1 border border-[var(--color-ink)]/20 px-4 py-2.5 text-sm focus:outline-none focus:border-[var(--color-gold)] transition-colors"
           />
           <button
             type="submit"
-            className="bg-[var(--color-plum)] text-[var(--color-ivory)] px-6 py-2.5 text-sm hover:bg-[var(--color-brass)] transition-colors"
+            className="bg-[var(--color-ink)] text-[var(--color-surface)] px-6 py-2.5 text-sm hover:bg-[var(--color-gold)] hover:text-[var(--color-ink)] transition-colors"
           >
             Track
           </button>

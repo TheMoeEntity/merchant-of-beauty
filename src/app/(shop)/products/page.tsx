@@ -40,24 +40,24 @@ async function CategoryFilter({ active }: { active?: string }) {
         href="/products"
         className={`px-4 py-1.5 text-sm border transition-colors ${
           !active
-            ? 'bg-[var(--color-plum)] text-[var(--color-ivory)] border-[var(--color-plum)]'
-            : 'border-[var(--color-plum)]/20 text-[var(--color-plum)]/60 hover:border-[var(--color-plum)] hover:text-[var(--color-plum)]'
+            ? 'bg-[var(--color-ink)] text-[var(--color-surface)] border-[var(--color-ink)]'
+            : 'border-[var(--color-ink)]/20 text-[var(--color-ink)]/60 hover:border-[var(--color-ink)] hover:text-[var(--color-ink)]'
         }`}
       >
         All
       </Link>
       {categories.map((cat) => (
-        <a
+        <Link
           key={cat._id}
           href={`/products?category=${cat.slug.current}`}
           className={`px-4 py-1.5 text-sm border transition-colors ${
             active === cat.slug.current
-              ? 'bg-[var(--color-plum)] text-[var(--color-ivory)] border-[var(--color-plum)]'
-              : 'border-[var(--color-plum)]/20 text-[var(--color-plum)]/60 hover:border-[var(--color-plum)] hover:text-[var(--color-plum)]'
+              ? 'bg-[var(--color-ink)] text-[var(--color-surface)] border-[var(--color-ink)]'
+              : 'border-[var(--color-ink)]/20 text-[var(--color-ink)]/60 hover:border-[var(--color-ink)] hover:text-[var(--color-ink)]'
           }`}
         >
           {cat.title}
-        </a>
+        </Link>
       ))}
     </div>
   )
@@ -69,15 +69,15 @@ export default async function ShopPage({ searchParams }: Props) {
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
       <div className="mb-10">
-        <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-brass)] mb-2">
+        <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-gold-dark)] mb-2">
           Our Collection
         </p>
-        <h1 className="font-display text-4xl text-[var(--color-plum)] mb-6">
+        <h1 className="font-display text-4xl text-[var(--color-ink)] mb-6">
           Shop
         </h1>
         <Suspense
           fallback={
-            <div className="h-8 animate-pulse bg-[var(--color-plum)]/10 rounded w-64" />
+            <div className="h-8 animate-pulse bg-[var(--color-ink)]/10 rounded w-64" />
           }
         >
           <CategoryFilter active={category} />
@@ -90,9 +90,9 @@ export default async function ShopPage({ searchParams }: Props) {
             <>
               {Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className="space-y-3">
-                  <div className="aspect-square bg-[var(--color-plum)]/10 animate-pulse" />
-                  <div className="h-4 bg-[var(--color-plum)]/10 animate-pulse rounded" />
-                  <div className="h-4 w-2/3 bg-[var(--color-plum)]/10 animate-pulse rounded" />
+                  <div className="aspect-square bg-[var(--color-ink)]/10 animate-pulse" />
+                  <div className="h-4 bg-[var(--color-ink)]/10 animate-pulse rounded" />
+                  <div className="h-4 w-2/3 bg-[var(--color-ink)]/10 animate-pulse rounded" />
                 </div>
               ))}
             </>

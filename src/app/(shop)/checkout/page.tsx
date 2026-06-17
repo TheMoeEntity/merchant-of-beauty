@@ -24,12 +24,12 @@ export default function CheckoutPage() {
   if (!items.length) {
     return (
       <div className="max-w-xl mx-auto px-6 py-20 text-center">
-        <p className="font-display text-2xl text-[var(--color-plum)] mb-4">
+        <p className="font-display text-2xl text-[var(--color-ink)] mb-4">
           Your cart is empty
         </p>
         <Link
           href="/products"
-          className="text-sm text-[var(--color-brass)] hover:underline"
+          className="text-sm text-[var(--color-gold-dark)] hover:underline"
         >
           Continue Shopping →
         </Link>
@@ -41,7 +41,7 @@ export default function CheckoutPage() {
     <div className="max-w-5xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-12">
       {/* Order Summary */}
       <div>
-        <h2 className="font-display text-2xl text-[var(--color-plum)] mb-6">
+        <h2 className="font-display text-2xl text-[var(--color-ink)] mb-6">
           Order Summary
         </h2>
         <div className="space-y-4 mb-6">
@@ -57,9 +57,9 @@ export default function CheckoutPage() {
             </div>
           ))}
         </div>
-        <div className="border-t border-[var(--color-plum)]/10 pt-4 flex justify-between">
-          <span className="font-medium text-[var(--color-plum)]">Total</span>
-          <span className="font-display text-xl text-[var(--color-plum)]">
+        <div className="border-t border-[var(--color-ink)]/10 pt-4 flex justify-between">
+          <span className="font-medium text-[var(--color-ink)]">Total</span>
+          <span className="font-display text-xl text-[var(--color-ink)]">
             {formatNaira(total)}
           </span>
         </div>
@@ -67,7 +67,7 @@ export default function CheckoutPage() {
 
       {/* Checkout Form */}
       <div>
-        <h2 className="font-display text-2xl text-[var(--color-plum)] mb-6">
+        <h2 className="font-display text-2xl text-[var(--color-ink)] mb-6">
           Your Details
         </h2>
 
@@ -124,14 +124,14 @@ export default function CheckoutPage() {
               <label className="block text-xs uppercase tracking-wider text-[var(--color-muted)] mb-1">
                 {label}{' '}
                 {required && (
-                  <span className="text-[var(--color-brass)]">*</span>
+                  <span className="text-[var(--color-gold-dark)]">*</span>
                 )}
               </label>
               <input
                 name={name}
                 type={type}
                 required={required}
-                className="w-full border border-[var(--color-plum)]/20 bg-transparent px-4 py-2.5 text-sm text-[var(--color-ink)] focus:outline-none focus:border-[var(--color-brass)] transition-colors"
+                className="w-full border border-[var(--color-ink)]/20 bg-transparent px-4 py-2.5 text-sm text-[var(--color-ink)] focus:outline-none focus:border-[var(--color-gold)] transition-colors"
               />
             </div>
           ))}
@@ -143,14 +143,14 @@ export default function CheckoutPage() {
             <textarea
               name="notes"
               rows={3}
-              className="w-full border border-[var(--color-plum)]/20 bg-transparent px-4 py-2.5 text-sm text-[var(--color-ink)] focus:outline-none focus:border-[var(--color-brass)] transition-colors resize-none"
+              className="w-full border border-[var(--color-ink)]/20 bg-transparent px-4 py-2.5 text-sm text-[var(--color-ink)] focus:outline-none focus:border-[var(--color-gold)] transition-colors resize-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={pending}
-            className="w-full bg-[var(--color-plum)] text-[var(--color-ivory)] py-3 text-sm font-medium hover:bg-[var(--color-brass)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[var(--color-ink)] text-[var(--color-surface)] py-3 text-sm font-medium hover:bg-[var(--color-gold)] hover:text-[var(--color-ink)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {pending ? 'Placing Order...' : 'Place Order'}
           </button>

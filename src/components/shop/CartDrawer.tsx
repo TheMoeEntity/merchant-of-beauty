@@ -16,7 +16,7 @@ export default function CartDrawer() {
     <>
       <div
         onClick={close}
-        className={`fixed inset-0 z-50 bg-ink/30 transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 bg-ink/40 transition-opacity duration-300 ${
           isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       />
@@ -66,14 +66,14 @@ export default function CartDrawer() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => updateQty(product._id, quantity - 1)}
-                      className="w-6 h-6 border border-ink/20 text-sm flex items-center justify-center"
+                      className="w-6 h-6 border border-ink/20 text-sm flex items-center justify-center hover:border-gold transition-colors"
                     >
                       −
                     </button>
                     <span className="text-sm w-4 text-center">{quantity}</span>
                     <button
                       onClick={() => updateQty(product._id, quantity + 1)}
-                      className="w-6 h-6 border border-ink/20 text-sm flex items-center justify-center"
+                      className="w-6 h-6 border border-ink/20 text-sm flex items-center justify-center hover:border-gold transition-colors"
                     >
                       +
                     </button>
@@ -99,7 +99,7 @@ export default function CartDrawer() {
             <Link
               href="/checkout"
               onClick={close}
-              className="block w-full bg-plum text-surface text-center py-3 text-sm font-medium hover:bg-brass transition-colors"
+              className="block w-full bg-ink text-surface text-center py-3 text-sm font-medium hover:bg-gold hover:text-ink transition-colors"
             >
               Proceed to Checkout
             </Link>
