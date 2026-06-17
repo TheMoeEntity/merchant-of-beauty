@@ -1,39 +1,53 @@
 'use client'
 
 import Link from 'next/link'
-import { useUIStore } from '@/store/ui.store'
 import { useCartStore } from '@/store/cart.store'
-import { ShoppingBag } from 'lucide-react'
+import { useCartDrawer } from '@/store/cart-drawer.store'
+
+const NAV_LINKS = [
+  { href: '/', label: 'Home' },
+  { href: '/products', label: 'Shop' },
+  { href: '/about', label: 'About Us' },
+]
 
 export default function Navbar() {
-    const { toggleCart } = useUIStore()
-    const totalItems = useCartStore((s) => s.totalItems)
+  const itemCount = useCartStore((state) => state.itemCount)
+  const openCart = useCartDrawer((state) => state.open)
 
-    return (
-        <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-ivory)] border-b border-[var(--color-brass)]/20">
-            <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                <Link href="/" className="font-display text-xl text-[var(--color-plum)]">
-                    Merchant of Beauty
-                </Link>
+  return (
+    <header className="sticky top-0 z-40 border-b border-ink/5 bg-surface/80 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <nav className="flex items-center gap-7">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-xs font-semibold uppercase tracking-wider text-ink transition-colors hover:text-brass"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
 
-                <nav className="hidden md:flex items-center gap-8">
-                    <Link href="/" className="text-sm text-[var(--color-plum)]/70 hover:text-[var(--color-plum)] transition-colors">Home</Link>
-                    <Link href="/shop" className="text-sm text-[var(--color-plum)]/70 hover:text-[var(--color-plum)] transition-colors">Shop</Link>
-                    <Link href="/about" className="text-sm text-[var(--color-plum)]/70 hover:text-[var(--color-plum)] transition-colors">About</Link>
-                </nav>
+        <Link
+          href="/"
+          className="font-display text-2xl text-plum absolute left-1/2 -translate-x-1/2"
+        >
+          Merchant of Beauty
+        </Link>
 
-                <button
-                    onClick={toggleCart}
-                    className="relative p-2 text-[var(--color-plum)] hover:text-[var(--color-brass)] transition-colors"
-                >
-                    <ShoppingBag size={22} />
-                    {totalItems() > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-[var(--color-brass)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                            {totalItems()}
-                        </span>
-                    )}
-                </button>
-            </div>
-        </header>
-    )
+        <button
+          onClick={openCart}
+          className="relative flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ink transition-colors hover:text-brass"
+        >
+          Cart
+          {itemCount > 0 && (
+            <span className="flex size-5 items-center justify-center rounded-full bg-brass text-[10px] font-bold text-white">
+              {itemCount}
+            </span>
+          )}
+        </button>
+      </div>
+    </header>
+  )
 }
