@@ -73,7 +73,11 @@ export async function getHeroBanner(): Promise<HeroBanner | null> {
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   return client.fetch(
-    groq`*[_type == "siteSettings"][0] { storeName, contactEmail, contactPhone, address, instagram, twitter, facebook }`,
+    groq`*[_type == "siteSettings"][0] {
+      storeName, contactEmail, contactPhone, address,
+      whatsapp, instagram, twitter, facebook,
+      ceo { name, title, bio, photo }
+    }`,
     {},
     { next: { tags: ['settings'] } }
   )

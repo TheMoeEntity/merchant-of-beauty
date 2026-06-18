@@ -30,11 +30,18 @@ export interface SiteSettings {
   contactEmail: string | null
   contactPhone: string | null
   address: string | null
+  whatsapp: string | null
   instagram: string | null
   twitter: string | null
   facebook: string | null
+  ceo: CEO | null
 }
-
+export interface CEO {
+  name: string
+  title: string
+  bio: string | null
+  photo: SanityImage | null
+}
 export interface HeroTile {
   image: SanityImage
   label?: string

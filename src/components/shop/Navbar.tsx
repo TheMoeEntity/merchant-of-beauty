@@ -18,7 +18,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-ink/10 bg-surface/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6 py-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-around px-4 sm:px-6 py-4">
         {/* Left side - Navigation links (hidden on mobile) */}
         <nav className="hidden md:flex items-center gap-7">
           {NAV_LINKS.map((link) => (
@@ -38,10 +38,7 @@ export default function Navbar() {
         </div>
 
         {/* Center - Logo */}
-        <Link
-          href="/"
-          className="font-display text-2xl text-ink absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"
-        >
+        <Link href="/" className="font-display text-2xl text-ink">
           <span className="hidden md:block">Merchant of Beauty</span>
           <span className="md:hidden">M.O.B</span>
         </Link>

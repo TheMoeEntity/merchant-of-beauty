@@ -1,6 +1,7 @@
 import Navbar from '@/components/shop/Navbar'
 import CartDrawer from '@/components/shop/CartDrawer'
 import { Footer } from '@/components/shop/Footer'
+import { WhatsAppButtonWrapper } from '@/components/shop/WhatsAppButtonWrapper'
 
 export default function ShopLayout({
   children,
@@ -12,6 +13,7 @@ export default function ShopLayout({
       <Navbar />
       <CartDrawer />
       <main>{children}</main>
+      <WhatsAppButtonWrapper />
       <Footer />
     </>
   )

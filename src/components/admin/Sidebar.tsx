@@ -42,6 +42,12 @@ export function Sidebar({ user }: { user: SessionUser }) {
             </Link>
           )
         })}
+        <Link
+          href="/"
+          className="block px-4 py-2.5 text-sm rounded transition-colors text-[var(--color-surface)]/70 hover:bg-[var(--color-surface)]/5 hover:text-[var(--color-surface)]"
+        >
+          Home
+        </Link>
       </nav>
 
       <div className="px-6 py-5 border-t border-[var(--color-surface)]/10">
@@ -49,6 +55,12 @@ export function Sidebar({ user }: { user: SessionUser }) {
         <p className="text-xs text-[var(--color-surface)]/50 capitalize mb-3">
           {user.role}
         </p>
+        <Link
+          href="/dashboard/account"
+          className="block text-xs text-[var(--color-surface)]/50 hover:text-[var(--color-gold)] transition-colors mb-2"
+        >
+          Account Settings
+        </Link>
         <form action={signOutAction}>
           <button
             type="submit"
