@@ -21,7 +21,7 @@ export async function GET(
     <InvoicePDF order={order} invoice={invoice} />
   )
 
-  return new NextResponse(buffer, {
+  return new NextResponse(new Uint8Array(buffer), {
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `inline; filename="invoice-${invoice.id}.pdf"`,

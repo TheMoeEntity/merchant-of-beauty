@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth'
 import { Sidebar } from '@/components/admin/Sidebar'
 import { Toaster } from 'sonner'
+import { SessionUser } from '@/types/auth.types'
 
 export default async function DashboardLayout({
   children,
@@ -9,12 +10,18 @@ export default async function DashboardLayout({
   children: React.ReactNode
 }) {
   const session = await auth()
-
   if (!session?.user) redirect('/login')
 
+  const user: SessionUser = {
+    id: session.user.id as string,
+    name: session.user.name as string,
+    email: session.user.email as string,
+    role: session.user.role as SessionUser['role'],
+  }
+
   return (
-    <div className="flex min-h-screen bg-[var(--color-surface)]">
-      <Sidebar user={session?.user} />
+    <div className="flex min-h-screen bg-(--color-surface)">
+      <Sidebar user={user} />
       <Toaster
         position="top-right"
         toastOptions={{

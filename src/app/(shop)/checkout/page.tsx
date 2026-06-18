@@ -8,7 +8,11 @@ import { formatNaira } from '@/lib/utils'
 import Link from 'next/link'
 import { toast } from 'sonner'
 
-const initialState = { error: null }
+interface CheckoutState {
+  error: string | null
+}
+
+const initialState: CheckoutState = { error: null }
 
 export default function CheckoutPage() {
   const { items, total } = useCartStore()

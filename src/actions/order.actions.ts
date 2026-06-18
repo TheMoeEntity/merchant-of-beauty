@@ -18,7 +18,7 @@ const CheckoutSchema = z.object({
 export async function checkoutAction(
   prevState: { error: string | null },
   formData: FormData
-) {
+): Promise<{ error: string | null }> {
   // ----------------------------------------------------------------
   // Rate limiting — 3 orders per hour per IP address.
   // This is the first thing we check, before ANY business logic,
