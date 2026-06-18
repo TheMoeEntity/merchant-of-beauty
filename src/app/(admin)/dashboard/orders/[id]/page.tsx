@@ -2,33 +2,17 @@ import { notFound } from 'next/navigation'
 import { getOrderById } from '@/services/order.service'
 import { getInvoiceByOrderId } from '@/services/invoice.service'
 import { StatusPill } from '@/components/admin/StatusPill'
+import { OrderActions } from '@/components/admin/OrderActions'
 import { formatNaira } from '@/lib/utils'
-import {
-  updateOrderStatusAction,
-  generateInvoiceAction,
-} from '@/actions/admin.actions'
-import { OrderStatus } from '@/types/order.types'
-import Link from 'next/link'
 
 interface Props {
   params: Promise<{ id: string }>
 }
 
-const STATUS_OPTIONS: OrderStatus[] = [
-  'pending',
-  'confirmed',
-  'processing',
-  'shipped',
-  'delivered',
-  'cancelled',
-]
-
 export default async function OrderDetailPage({ params }: Props) {
   const { id } = await params
   const order = await getOrderById(id)
-
   if (!order) notFound()
-
   const invoice = await getInvoiceByOrderId(id)
 
   return (
@@ -83,68 +67,11 @@ export default async function OrderDetailPage({ params }: Props) {
           className="bg-[var(--color-card)] p-6"
           style={{ boxShadow: 'var(--shadow-soft)' }}
         >
-          <h2 className="text-xs uppercase tracking-widest text-[var(--color-muted)] mb-4">
-            Update Status
-          </h2>
-          <form action={updateOrderStatusAction} className="space-y-3">
-            <input type="hidden" name="orderId" value={order.id} />
-            <select
-              key={order.status}
-              name="status"
-              defaultValue={order.status}
-              className="w-full border border-[var(--color-ink)]/20 bg-transparent px-4 py-2.5 text-sm text-[var(--color-ink)] focus:outline-none focus:border-[var(--color-gold)] transition-colors"
-            >
-              {STATUS_OPTIONS.map((s) => (
-                <option key={s} value={s} className="capitalize">
-                  {s}
-                </option>
-              ))}
-            </select>
-            <button
-              type="submit"
-              className="w-full bg-[var(--color-ink)] text-[var(--color-surface)] py-2.5 text-sm font-medium hover:bg-[var(--color-gold)] hover:text-[var(--color-ink)] transition-colors"
-            >
-              Update Status
-            </button>
-          </form>
-
-          <div className="mt-6 pt-6 border-t border-[var(--color-ink)]/10">
-            <h2 className="text-xs uppercase tracking-widest text-[var(--color-muted)] mb-3">
-              Invoice
-            </h2>
-
-            {invoice ? (
-              <div>
-                <p className="text-sm text-[var(--color-ink)] mb-3">
-                  Invoice <span className="font-display">{invoice.id}</span>{' '}
-                  generated on{' '}
-                  {new Date(invoice.issuedAt).toLocaleDateString('en-NG', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                  })}
-                </p>
-                <Link
-                  href={`/api/invoices/${order.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block border border-[var(--color-ink)] text-[var(--color-ink)] px-4 py-2 text-sm hover:bg-[var(--color-ink)] hover:text-[var(--color-surface)] transition-colors"
-                >
-                  View Invoice PDF
-                </Link>
-              </div>
-            ) : (
-              <form action={generateInvoiceAction}>
-                <input type="hidden" name="orderId" value={order.id} />
-                <button
-                  type="submit"
-                  className="w-full border border-[var(--color-ink)] text-[var(--color-ink)] py-2.5 text-sm font-medium hover:bg-[var(--color-ink)] hover:text-[var(--color-surface)] transition-colors"
-                >
-                  Generate Invoice
-                </button>
-              </form>
-            )}
-          </div>
+          <OrderActions
+            orderId={order.id}
+            currentStatus={order.status}
+            invoice={invoice}
+          />
         </div>
       </div>
 

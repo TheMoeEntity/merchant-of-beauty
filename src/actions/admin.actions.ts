@@ -14,23 +14,30 @@ const StatusSchema = z.enum([
   'cancelled',
 ])
 
-export async function updateOrderStatusAction(formData: FormData) {
+export async function updateOrderStatusAction(
+  _prevState: { error: string | null; success: boolean },
+  formData: FormData
+) {
   const orderId = formData.get('orderId') as string
   const status = StatusSchema.parse(formData.get('status'))
 
   await updateOrderStatus(orderId, status)
 
-  // Revalidate every page that shows this order's status so the
-  // dashboard overview, orders list, and this detail page all stay
-  // in sync without the admin needing to manually refresh.
   revalidatePath('/dashboard')
   revalidatePath('/dashboard/orders')
   revalidatePath(`/dashboard/orders/${orderId}`)
+
+  return { error: null, success: true }
 }
 
-export async function generateInvoiceAction(formData: FormData) {
+export async function generateInvoiceAction(
+  _prevState: { error: string | null; success: boolean },
+  formData: FormData
+) {
   const orderId = formData.get('orderId') as string
 
   await generateInvoice(orderId)
   revalidatePath(`/dashboard/orders/${orderId}`)
+
+  return { error: null, success: true }
 }

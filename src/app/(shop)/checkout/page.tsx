@@ -6,6 +6,7 @@ import { useCartDrawer } from '@/store/cart-drawer.store'
 import { checkoutAction } from '@/actions/order.actions'
 import { formatNaira } from '@/lib/utils'
 import Link from 'next/link'
+import { toast } from 'sonner'
 
 const initialState = { error: null }
 
@@ -20,6 +21,12 @@ export default function CheckoutPage() {
   useEffect(() => {
     closeCart()
   }, [closeCart])
+
+  useEffect(() => {
+    if (state.error) {
+      toast.error(state.error)
+    }
+  }, [state.error])
 
   if (!items.length) {
     return (
@@ -39,7 +46,6 @@ export default function CheckoutPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-12 grid md:grid-cols-2 gap-12">
-      {/* Order Summary */}
       <div>
         <h2 className="font-display text-2xl text-[var(--color-ink)] mb-6">
           Order Summary
@@ -65,17 +71,10 @@ export default function CheckoutPage() {
         </div>
       </div>
 
-      {/* Checkout Form */}
       <div>
         <h2 className="font-display text-2xl text-[var(--color-ink)] mb-6">
           Your Details
         </h2>
-
-        {state.error && (
-          <div className="mb-4 p-3 bg-[var(--color-status-cancelled-bg)] text-[var(--color-status-cancelled)] text-sm">
-            {state.error}
-          </div>
-        )}
 
         <form action={formAction} className="space-y-4">
           <input

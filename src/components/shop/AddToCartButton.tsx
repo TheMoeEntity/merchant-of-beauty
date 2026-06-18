@@ -3,6 +3,7 @@
 import { useCartStore } from '@/store/cart.store'
 import { useCartDrawer } from '@/store/cart-drawer.store'
 import { SanityProduct } from '@/types/sanity.types'
+import { toast } from 'sonner'
 
 interface Props {
   product: SanityProduct
@@ -15,6 +16,7 @@ export default function AddToCartButton({ product }: Props) {
   function handleAdd() {
     addItem(product)
     openCart()
+    toast.success(`${product.title} added to cart`)
   }
 
   return (

@@ -1,7 +1,8 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
 import { changePasswordAction } from '@/actions/staff.actions'
+import { toast } from 'sonner'
 
 const initialState = { error: null, success: false }
 
@@ -10,6 +11,11 @@ export function ChangePasswordForm() {
     changePasswordAction,
     initialState
   )
+
+  useEffect(() => {
+    if (state.success) toast.success('Password updated successfully')
+    if (state.error) toast.error(state.error)
+  }, [state])
 
   return (
     <form action={formAction} className="space-y-3">
