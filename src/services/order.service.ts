@@ -6,7 +6,7 @@ import {
   generateItemId,
   calculateOrderTotal,
 } from '@/lib/utils'
-import { eq, and, lt } from 'drizzle-orm'
+import { eq, and, lt, inArray, sql } from 'drizzle-orm'
 
 export async function createOrder(input: CreateOrderInput): Promise<string> {
   const orderId = generateOrderId()
@@ -66,14 +66,30 @@ export async function updateOrderStatus(
     .where(eq(orders.id, id))
 }
 
-export async function cancelAbandonedOrders(): Promise<number> {
+export async function deleteAbandonedOrders(): Promise<number> {
   const cutoff = new Date(Date.now() - 48 * 60 * 60 * 1000)
 
-  const result = await db
-    .update(orders)
-    .set({ status: 'cancelled', updatedAt: new Date() })
-    .where(and(eq(orders.status, 'pending'), lt(orders.createdAt, cutoff)))
+  const abandoned = await db
+    .select({ id: orders.id })
+    .from(orders)
+    .where(
+      and(
+        eq(orders.status, 'pending'),
+        lt(orders.createdAt, cutoff),
+        sql`${orders.createdAt} = ${orders.updatedAt}`
+      )
+    )
+
+  if (!abandoned.length) return 0
+
+  const ids = abandoned.map((o) => o.id)
+
+  await db.delete(orderItems).where(inArray(orderItems.orderId, ids))
+
+  const deleted = await db
+    .delete(orders)
+    .where(inArray(orders.id, ids))
     .returning({ id: orders.id })
 
-  return result.length
+  return deleted.length
 }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { cancelAbandonedOrders } from '@/services/order.service'
+import { deleteAbandonedOrders } from '@/services/order.service'
 
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get('authorization')
@@ -9,13 +9,12 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const cancelled = await cancelAbandonedOrders()
-
-    console.log(`[cron] Cancelled ${cancelled} abandoned orders`)
+    const deleted = await deleteAbandonedOrders()
+    console.log(`[cron] Deleted ${deleted} abandoned orders`)
 
     return NextResponse.json({
       success: true,
-      cancelled,
+      deleted,
       timestamp: new Date().toISOString(),
     })
   } catch (err) {
