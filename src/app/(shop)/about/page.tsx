@@ -48,7 +48,7 @@ export default async function AboutPage() {
             {[
               'Spa Equipment',
               'Salon Furniture',
-              'Skincare Technology',
+              'Tattoo accessories',
               'Beauty Business Solutions',
               'Nationwide Delivery',
             ].map((item) => (
