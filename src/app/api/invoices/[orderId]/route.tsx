@@ -3,11 +3,21 @@ import { renderToBuffer } from '@react-pdf/renderer'
 import { getOrderById } from '@/services/order.service'
 import { getInvoiceByOrderId } from '@/services/invoice.service'
 import { InvoicePDF } from '@/components/admin/InvoicePDF'
+import { auth } from '@/lib/auth'
 
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ orderId: string }> }
 ) {
+  const session = await auth()
+  if (!session?.user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  // if (session.user.role !== 'admin') {
+  //   return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  // }
+
   const { orderId } = await params
 
   const order = await getOrderById(orderId)
