@@ -1,4 +1,12 @@
-import { pgTable, pgEnum, varchar, text, integer, real, timestamp } from 'drizzle-orm/pg-core'
+import {
+  pgTable,
+  pgEnum,
+  varchar,
+  text,
+  integer,
+  real,
+  timestamp,
+} from 'drizzle-orm/pg-core'
 
 // ----------------------------------------------------------------
 // Enums
@@ -7,12 +15,12 @@ import { pgTable, pgEnum, varchar, text, integer, real, timestamp } from 'drizzl
 export const roleEnum = pgEnum('role', ['owner', 'staff'])
 
 export const orderStatusEnum = pgEnum('order_status', [
-    'pending',
-    'confirmed',
-    'processing',
-    'shipped',
-    'delivered',
-    'cancelled',
+  'pending',
+  'confirmed',
+  'processing',
+  'shipped',
+  'delivered',
+  'cancelled',
 ])
 
 // ----------------------------------------------------------------
@@ -20,12 +28,12 @@ export const orderStatusEnum = pgEnum('order_status', [
 // ----------------------------------------------------------------
 
 export const users = pgTable('users', {
-    id: varchar('id', { length: 30 }).primaryKey(),
-    name: varchar('name', { length: 100 }).notNull(),
-    email: varchar('email', { length: 255 }).notNull().unique(),
-    password: text('password').notNull(),
-    role: roleEnum('role').notNull().default('staff'),
-    createdAt: timestamp('created_at').defaultNow().notNull(),
+  id: varchar('id', { length: 30 }).primaryKey(),
+  name: varchar('name', { length: 100 }).notNull(),
+  email: varchar('email', { length: 255 }).notNull().unique(),
+  password: text('password').notNull(),
+  role: roleEnum('role').notNull().default('staff'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 
 // ----------------------------------------------------------------
@@ -33,16 +41,16 @@ export const users = pgTable('users', {
 // ----------------------------------------------------------------
 
 export const orders = pgTable('orders', {
-    id: varchar('id', { length: 20 }).primaryKey(),
-    customerName: varchar('customer_name', { length: 100 }).notNull(),
-    customerEmail: varchar('customer_email', { length: 255 }).notNull(),
-    customerPhone: varchar('customer_phone', { length: 20 }),
-    customerAddress: text('customer_address'),
-    status: orderStatusEnum('status').notNull().default('pending'),
-    totalAmount: real('total_amount').notNull(),
-    notes: text('notes'),
-    createdAt: timestamp('created_at').defaultNow().notNull(),
-    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  id: varchar('id', { length: 20 }).primaryKey(),
+  customerName: varchar('customer_name', { length: 100 }).notNull(),
+  customerEmail: varchar('customer_email', { length: 255 }).notNull(),
+  customerPhone: varchar('customer_phone', { length: 20 }),
+  customerAddress: text('customer_address'),
+  status: orderStatusEnum('status').notNull().default('pending'),
+  totalAmount: real('total_amount').notNull(),
+  notes: text('notes'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 })
 
 // ----------------------------------------------------------------
@@ -52,13 +60,15 @@ export const orders = pgTable('orders', {
 // ----------------------------------------------------------------
 
 export const orderItems = pgTable('order_items', {
-    id: varchar('id', { length: 30 }).primaryKey(),
-    orderId: varchar('order_id', { length: 20 }).notNull().references(() => orders.id),
-    productId: varchar('product_id', { length: 100 }).notNull(),
-    productTitle: varchar('product_title', { length: 255 }).notNull(),
-    productImage: text('product_image'),
-    quantity: integer('quantity').notNull(),
-    unitPrice: real('unit_price').notNull(),
+  id: varchar('id', { length: 30 }).primaryKey(),
+  orderId: varchar('order_id', { length: 20 })
+    .notNull()
+    .references(() => orders.id),
+  productId: varchar('product_id', { length: 100 }).notNull(),
+  productTitle: varchar('product_title', { length: 255 }).notNull(),
+  productImage: text('product_image'),
+  quantity: integer('quantity').notNull(),
+  unitPrice: real('unit_price').notNull(),
 })
 
 // ----------------------------------------------------------------
@@ -66,29 +76,49 @@ export const orderItems = pgTable('order_items', {
 // ----------------------------------------------------------------
 
 export const invoices = pgTable('invoices', {
-    id: varchar('id', { length: 30 }).primaryKey(),
-    orderId: varchar('order_id', { length: 20 }).notNull().references(() => orders.id),
-    issuedAt: timestamp('issued_at').defaultNow().notNull(),
-    pdfUrl: text('pdf_url'),
-    notes: text('notes'),
+  id: varchar('id', { length: 30 }).primaryKey(),
+  orderId: varchar('order_id', { length: 20 })
+    .notNull()
+    .references(() => orders.id),
+  issuedAt: timestamp('issued_at').defaultNow().notNull(),
+  pdfUrl: text('pdf_url'),
+  notes: text('notes'),
 })
 
 import { relations } from 'drizzle-orm'
 
 export const ordersRelations = relations(orders, ({ many }) => ({
-    items: many(orderItems),
+  items: many(orderItems),
 }))
 
 export const orderItemsRelations = relations(orderItems, ({ one }) => ({
-    order: one(orders, {
-        fields: [orderItems.orderId],
-        references: [orders.id],
-    }),
+  order: one(orders, {
+    fields: [orderItems.orderId],
+    references: [orders.id],
+  }),
 }))
 
 export const invoicesRelations = relations(invoices, ({ one }) => ({
-    order: one(orders, {
-        fields: [invoices.orderId],
-        references: [orders.id],
-    }),
+  order: one(orders, {
+    fields: [invoices.orderId],
+    references: [orders.id],
+  }),
 }))
+
+export const standaloneInvoiceStatusEnum = pgEnum('standalone_invoice_status', [
+  'draft',
+  'sent',
+])
+
+export const standaloneInvoices = pgTable('standalone_invoices', {
+  id: varchar('id', { length: 30 }).primaryKey(),
+  customerName: varchar('customer_name', { length: 100 }).notNull(),
+  customerEmail: varchar('customer_email', { length: 255 }),
+  customerPhone: varchar('customer_phone', { length: 20 }),
+  customerAddress: text('customer_address'),
+  items: text('items').notNull(),
+  totalAmount: real('total_amount').notNull(),
+  notes: text('notes'),
+  status: standaloneInvoiceStatusEnum('status').notNull().default('draft'),
+  issuedAt: timestamp('issued_at').defaultNow().notNull(),
+})

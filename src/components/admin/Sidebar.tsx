@@ -8,6 +8,7 @@ import { SessionUser } from '@/types/auth.types'
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'Overview' },
   { href: '/dashboard/orders', label: 'Orders' },
+  { href: '/dashboard/invoices', label: 'Invoices' },
   { href: '/dashboard/staff', label: 'Staff', ownerOnly: true },
 ]
 
