@@ -27,11 +27,12 @@ export async function CategoryStrip() {
             <div className="w-16 h-16 rounded-full bg-[var(--color-gold-light)] flex items-center justify-center overflow-hidden group-hover:bg-[var(--color-gold)] transition-colors">
               {cat.icon ? (
                 <Image
-                  src={urlFor(cat.icon).width(40).height(40).url()}
+                  src={urlFor(cat.icon).width(800).height(800).url()}
                   alt={cat.title}
-                  width={40}
-                  height={40}
-                  className="object-contain"
+                  width={45}
+                  height={45}
+                  quality={100}
+                  className="object-contain rounded-full"
                 />
               ) : (
                 <span className="text-[var(--color-gold-dark)] text-xl font-display">

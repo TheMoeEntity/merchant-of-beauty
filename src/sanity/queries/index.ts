@@ -11,6 +11,7 @@ export async function getProducts(): Promise<SanityProduct[]> {
   return client.fetch(
     groq`*[_type == "product"] | order(_createdAt desc) {
       ...,
+      "images": images[defined(asset._ref)],
       category->{ _id, title, slug }
     }`,
     {},
@@ -22,6 +23,7 @@ export async function getFeaturedProducts(): Promise<SanityProduct[]> {
   return client.fetch(
     groq`*[_type == "product" && featured == true][0...6] {
       ...,
+      "images": images[defined(asset._ref)],
       category->{ _id, title, slug }
     }`,
     {},
@@ -35,6 +37,7 @@ export async function getProductBySlug(
   return client.fetch(
     groq`*[_type == "product" && slug.current == $slug][0] {
       ...,
+      "images": images[defined(asset._ref)],
       category->{ _id, title, slug }
     }`,
     { slug },
@@ -48,6 +51,7 @@ export async function getProductsByCategory(
   return client.fetch(
     groq`*[_type == "product" && category->slug.current == $categorySlug] {
       ...,
+      "images": images[defined(asset._ref)],
       category->{ _id, title, slug }
     }`,
     { categorySlug },

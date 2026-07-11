@@ -21,7 +21,7 @@ function AnimatedProductCard({
   product: SanityProduct
   index: number
 }) {
-  const image = product.images?.[0]
+  const image = product.images?.find((img) => img?.asset?._ref)
   const cardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

@@ -77,10 +77,11 @@ export default async function AboutPage() {
             {settings.ceo.photo && (
               <div className="w-40 h-40 flex-shrink-0 overflow-hidden rounded-full">
                 <Image
-                  src={urlFor(settings.ceo.photo).width(160).height(160).url()}
+                  src={urlFor(settings.ceo.photo).width(900).height(900).url()}
                   alt={settings.ceo.name}
                   width={160}
                   height={160}
+                  quality={100}
                   className="object-cover w-full h-full"
                 />
               </div>

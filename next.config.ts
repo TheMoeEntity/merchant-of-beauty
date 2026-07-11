@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.sanity.io',
       },
     ],
+    qualities: [100],
   },
   allowedDevOrigins: ['192.168.1.41'],
 }
