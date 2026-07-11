@@ -9,7 +9,7 @@ export async function CategoryStrip() {
   if (!categories.length) return null
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16">
+    <section className="bg-[var(--color-section-alt,var(--color-gold-light))] max-w-7xl mx-auto px-10 py-16">
       <p className="text-xs uppercase tracking-[0.3em] text-[var(--color-gold-dark)] mb-2 text-center">
         Shop by Category
       </p>

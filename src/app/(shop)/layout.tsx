@@ -2,6 +2,7 @@ import Navbar from '@/components/shop/Navbar'
 import CartDrawer from '@/components/shop/CartDrawer'
 import { Footer } from '@/components/shop/Footer'
 import { WhatsAppButtonWrapper } from '@/components/shop/WhatsAppButtonWrapper'
+import { ThemeSwitcher } from '@/components/shop/ThemeSwitcher'
 import { Toaster } from 'sonner'
 
 export default function ShopLayout({
@@ -13,8 +14,10 @@ export default function ShopLayout({
     <>
       <Navbar />
       <CartDrawer />
-      <main>{children}</main>
+      <main className="pt-4">{children}</main>
+      <Footer />
       <WhatsAppButtonWrapper />
+      <ThemeSwitcher />
       <Toaster
         position="top-right"
         toastOptions={{
@@ -27,7 +30,6 @@ export default function ShopLayout({
           },
         }}
       />
-      <Footer />
     </>
   )
 }

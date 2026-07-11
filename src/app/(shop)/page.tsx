@@ -60,7 +60,7 @@ async function HeroSection() {
   if (!hero) return null
 
   return (
-    <section className="max-w-7xl mx-auto px-4 pt-6 grid grid-cols-3 gap-2 md:gap-4">
+    <section className="max-w-7xl mx-auto pt-6 grid grid-cols-3 gap-2 md:gap-4 bg-[var(--color-hero-bg,transparent)]">
       <div className="grid grid-rows-2 gap-1 md:gap-4">
         <HeroTile tile={hero.leftTop} priority />
         <HeroTile tile={hero.leftBottom} />

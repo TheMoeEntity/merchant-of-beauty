@@ -5,13 +5,14 @@
   --color-surface: #ffffff;
   --color-card: #ffffff;
   --color-muted: #6b6b6b;
-  --color-success: #5c8a5c;
   --color-gold: #c9a24b;
   --color-gold-dark: #a8842f;
   --color-gold-light: #f3e9d2;
-  --color-success-light: #e8f0e8;
   --color-charcoal: #181818;
+  --color-success: #5c8a5c;
+  --color-success-light: #e8f0e8;
   --color-sidebar-dark: #2a2a2a;
+
   --color-status-pending: #b08d57;
   --color-status-pending-bg: #f6eedf;
   --color-status-confirmed: #6b7fa3;
@@ -32,13 +33,164 @@
   --shadow-lifted: 0 2px 6px rgb(0 0 0 / 0.08), 0 16px 40px rgb(0 0 0 / 0.12);
 }
 
+/* ----------------------------------------------------------------
+   Runtime CSS custom properties
+   @theme tokens are compiled statically by Tailwind v4.
+   These :root declarations make the same values available as
+   live CSS variables that can be overridden by [data-theme]
+   attribute selectors at runtime.
+   ---------------------------------------------------------------- */
+:root {
+  --color-ink: #0a0a0a;
+  --color-surface: #ffffff;
+  --color-card: #ffffff;
+  --color-muted: #6b6b6b;
+  --color-gold: #c9a24b;
+  --color-gold-dark: #a8842f;
+  --color-gold-light: #f3e9d2;
+  --color-charcoal: #181818;
+  --color-section-alt: transparent;
+  --color-hero-bg: transparent;
+}
+
 body {
   background: var(--color-surface);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
-a,
-button {
-  cursor: pointer !important;
+
+/* ----------------------------------------------------------------
+   STOREFRONT THEME EXPERIMENTS
+   ---------------------------------------------------------------- */
+
+/* Option A — Warm cream */
+[data-theme='warm-cream'] {
+  --color-surface: #faf8f5;
+  --color-card: #f5f0e8;
+  --color-gold-light: #ede0c8;
+}
+
+/* Option B — Dark sections */
+[data-theme='dark-sections'] {
+  --color-surface: #ffffff;
+  --color-section-alt: #0a0a0a;
+  --color-hero-bg: #0a0a0a;
+}
+
+/* Option C — Gold tint alternating */
+[data-theme='gold-tint'] {
+  --color-surface: #ffffff;
+  --color-section-alt: #f3e9d2;
+  --color-card: #fdf6e9;
+}
+
+/* Option D — Full dark */
+[data-theme='full-dark'] {
+  --color-surface: #0a0a0a;
+  --color-card: #181818;
+  --color-ink: #ffffff;
+  --color-muted: #9b9b9b;
+  --color-gold: #c9a24b;
+  --color-gold-dark: #e8b84b;
+  --color-gold-light: #2a2218;
+}
+
+/* Option E — Combined */
+[data-theme='combined'] {
+  --color-surface: #ffffff;
+  --color-card: #ffffff;
+  --color-section-alt: #f3e9d2;
+  --color-hero-bg: #0a0a0a;
+}
+
+/* Option F — Dashboard-inspired (warm dark gray) */
+[data-theme='dashboard-warm'] {
+  --color-surface: #1e1e1e;
+  --color-card: #2a2a2a;
+  --color-ink: #f5f5f5;
+  --color-muted: #9b9b9b;
+  --color-gold: #c9a24b;
+  --color-gold-dark: #e8b84b;
+  --color-gold-light: #3d3020;
+  --color-section-alt: #242424;
+}
+
+/* Option F — Dashboard Warm (existing) */
+[data-theme='dashboard-warm'] {
+  --color-surface: #1e1e1e;
+  --color-card: #2a2a2a;
+  --color-ink: #f5f5f5;
+  --color-muted: #9b9b9b;
+  --color-gold: #c9a24b;
+  --color-gold-dark: #e8b84b;
+  --color-gold-light: #3d3020;
+  --color-section-alt: #242424;
+  --color-footer-bg: #141414;
+  --color-footer-text: #f5f5f5;
+}
+
+/* Option G — Charcoal Gold
+   Slightly lighter than F, strong gold accent sections */
+[data-theme='charcoal-gold'] {
+  --color-surface: #252525;
+  --color-card: #2f2f2f;
+  --color-ink: #f0f0f0;
+  --color-muted: #a0a0a0;
+  --color-gold: #c9a24b;
+  --color-gold-dark: #e8b84b;
+  --color-gold-light: #c9a24b26;
+  --color-section-alt: #c9a24b;
+  --color-footer-bg: #1a1a1a;
+  --color-footer-text: #f0f0f0;
+}
+
+/* Option H — Midnight Black with Gold Trim
+   Pure black surfaces, gold used aggressively for borders/accents
+   MOB logo treatment applied to the whole site */
+[data-theme='midnight-gold'] {
+  --color-surface: #080808;
+  --color-card: #111111;
+  --color-ink: #ffffff;
+  --color-muted: #888888;
+  --color-gold: #c9a24b;
+  --color-gold-dark: #e8b84b;
+  --color-gold-light: #1a150a;
+  --color-section-alt: #0f0f0f;
+  --color-footer-bg: #000000;
+  --color-footer-text: #ffffff;
+}
+
+/* Option I — Deep Navy
+   Not in the MOB palette but worth seeing — navy/dark blue
+   with gold reads very premium, common in luxury Nigerian brands */
+[data-theme='deep-navy'] {
+  --color-surface: #0d1b2a;
+  --color-card: #162336;
+  --color-ink: #f0f4f8;
+  --color-muted: #8ba3bc;
+  --color-gold: #c9a24b;
+  --color-gold-dark: #e8b84b;
+  --color-gold-light: #1a2a3a;
+  --color-section-alt: #111e2d;
+  --color-footer-bg: #091422;
+  --color-footer-text: #f0f4f8;
+}
+
+/* Option J — Warm Black (MOB signature)
+   The closest to the actual MOB brand logo treatment.
+   Pure black background, rich gold, everything else is white.
+   This IS the logo. Applied to the whole site. */
+[data-theme='mob-signature'] {
+  --color-surface: #0a0a0a;
+  --color-card: #141414;
+  --color-ink: #ffffff;
+  --color-muted: #888888;
+  --color-gold: #c9a24b;
+  --color-gold-dark: #d4af5a;
+  --color-gold-light: #1a1500;
+  --color-section-alt: #111111;
+  --color-footer-bg: #050505;
+  --color-footer-text: #ffffff;
+  --color-border: #c9a24b33;
 }
