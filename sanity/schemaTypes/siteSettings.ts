@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { DEFAULT_THEME, THEMES } from '../../src/lib/themes'
 
 export const siteSettings = defineType({
   name: 'siteSettings',
@@ -37,12 +38,34 @@ export const siteSettings = defineType({
       title: 'Contact Phone',
       type: 'string',
     }),
-    defineField({ name: 'address', title: 'Address', type: 'text' }),
+    defineField({
+      name: 'address',
+      title: 'Main Address',
+      type: 'text',
+      description: 'Primary office / warehouse address.',
+    }),
+    defineField({
+      name: 'showroomAddress',
+      title: 'Showroom Address',
+      type: 'text',
+      description: 'Physical showroom address, if different from the main address.',
+    }),
     defineField({
       name: 'whatsapp',
       title: 'WhatsApp Number',
       type: 'string',
       description: 'Include country code, no + or spaces. E.g. 2348012345678',
+    }),
+    defineField({
+      name: 'theme',
+      title: 'Website Theme',
+      type: 'string',
+      description:
+        'The colour theme of the whole website. Normally changed from the dashboard by the owner.',
+      options: {
+        list: THEMES.map((t) => ({ title: t.label, value: t.id })),
+      },
+      initialValue: DEFAULT_THEME,
     }),
     defineField({ name: 'instagram', title: 'Instagram URL', type: 'url' }),
     defineField({ name: 'twitter', title: 'Twitter URL', type: 'url' }),

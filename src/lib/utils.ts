@@ -1,4 +1,5 @@
 import { OrderStatus } from '@/types/order.types'
+import { ReviewStatus } from '@/types/review.types'
 
 export function generateOrderId(): string {
   const timestamp = Date.now().toString(36).toUpperCase()
@@ -12,6 +13,10 @@ export function generateInvoiceId(orderCount: number): string {
 
 export function generateItemId(): string {
   return `ITEM-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`.toUpperCase()
+}
+
+export function generateReviewId(): string {
+  return `REV-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`.toUpperCase()
 }
 
 export function formatNaira(amount: number): string {
@@ -38,6 +43,15 @@ export const ORDER_STATUS_MAP: Record<
   shipped: { label: 'Shipped', color: '#06B6D4' },
   delivered: { label: 'Delivered', color: '#10B981' },
   cancelled: { label: 'Cancelled', color: '#EF4444' },
+}
+
+export const REVIEW_STATUS_MAP: Record<
+  ReviewStatus,
+  { label: string; color: string }
+> = {
+  pending: { label: 'Pending', color: '#F59E0B' },
+  approved: { label: 'Approved', color: '#10B981' },
+  rejected: { label: 'Rejected', color: '#EF4444' },
 }
 
 export function standardizeWhatsappNumber(number: string): string {

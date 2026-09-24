@@ -1,4 +1,12 @@
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  Image,
+  StyleSheet,
+} from '@react-pdf/renderer'
+import { getLogoFilePath } from '@/lib/pdf-assets'
 import { StandaloneInvoicePDFProps } from '@/types/standalone-invoice.types'
 import { formatNaira } from '@/lib/utils'
 
@@ -111,9 +119,7 @@ export function StandaloneInvoicePDF({
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
           <View>
-            <Text style={styles.storeName}>
-              {storeName ?? 'Merchant of Beauty'}
-            </Text>
+            <Image src={getLogoFilePath()} style={{ width: 110, height: 59 }} />
             <Text style={{ fontSize: 9, color: '#6B6B6B', marginTop: 4 }}>
               Professional Spa, Salon & Tattoo Equipment
             </Text>

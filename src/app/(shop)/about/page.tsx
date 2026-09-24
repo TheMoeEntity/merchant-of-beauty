@@ -1,8 +1,16 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getSiteSettings } from '@/sanity/queries'
 import { urlFor } from '@/sanity/lib/image'
 import { SiInstagram, SiFacebook, SiX } from '@icons-pack/react-simple-icons'
+
+export const metadata: Metadata = {
+  title: 'About Us',
+  description:
+    'Learn about Merchant of Beauty, a leading supplier of premium spa, salon and tattoo equipment in Lagos, Nigeria, with nationwide delivery.',
+  alternates: { canonical: '/about' },
+}
 
 export default async function AboutPage() {
   const settings = await getSiteSettings()
@@ -142,6 +150,31 @@ export default async function AboutPage() {
             </a>
           )}
         </div>
+
+        {(settings?.address || settings?.showroomAddress) && (
+          <div className="grid sm:grid-cols-2 gap-8 mt-10 text-left max-w-2xl mx-auto">
+            {settings?.address && (
+              <div>
+                <p className="text-xs uppercase tracking-widest text-[var(--color-gold-dark)] mb-1">
+                  Office
+                </p>
+                <p className="text-sm text-[var(--color-ink)]">
+                  {settings.address}
+                </p>
+              </div>
+            )}
+            {settings?.showroomAddress && (
+              <div>
+                <p className="text-xs uppercase tracking-widest text-[var(--color-gold-dark)] mb-1">
+                  Showroom
+                </p>
+                <p className="text-sm text-[var(--color-ink)]">
+                  {settings.showroomAddress}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {(settings?.instagram || settings?.twitter || settings?.facebook) && (

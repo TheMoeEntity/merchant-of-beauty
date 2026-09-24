@@ -76,9 +76,11 @@ export async function getHeroBanner(): Promise<HeroBanner | null> {
 }
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
-  return client.fetch(
+  // Bypass the Sanity CDN so a theme change made from the dashboard shows
+  // immediately instead of after the CDN catches up.
+  return client.withConfig({ useCdn: false }).fetch(
     groq`*[_type == "siteSettings"][0] {
-      storeName, contactEmail, contactPhone, address,
+      storeName, contactEmail, contactPhone, address, showroomAddress, theme,
       whatsapp, instagram, twitter, facebook,
       ceo { name, title, bio, photo }
     }`,

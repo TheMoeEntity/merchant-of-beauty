@@ -122,3 +122,30 @@ export const standaloneInvoices = pgTable('standalone_invoices', {
   status: standaloneInvoiceStatusEnum('status').notNull().default('draft'),
   issuedAt: timestamp('issued_at').defaultNow().notNull(),
 })
+
+// ----------------------------------------------------------------
+// Reviews — customer star ratings + written feedback on products.
+// Products live in Sanity, not Postgres, so we store the Sanity
+// product ID/slug as plain strings rather than a foreign key.
+// Held as 'pending' until an admin approves it, so nothing customer
+// -submitted appears on the storefront unmoderated.
+// ----------------------------------------------------------------
+
+export const reviewStatusEnum = pgEnum('review_status', [
+  'pending',
+  'approved',
+  'rejected',
+])
+
+export const reviews = pgTable('reviews', {
+  id: varchar('id', { length: 30 }).primaryKey(),
+  productId: varchar('product_id', { length: 100 }).notNull(),
+  productSlug: varchar('product_slug', { length: 255 }).notNull(),
+  productTitle: varchar('product_title', { length: 255 }).notNull(),
+  customerName: varchar('customer_name', { length: 100 }).notNull(),
+  customerEmail: varchar('customer_email', { length: 255 }).notNull(),
+  rating: integer('rating').notNull(),
+  comment: text('comment'),
+  status: reviewStatusEnum('status').notNull().default('pending'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+})

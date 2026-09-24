@@ -1,45 +1,52 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useTransition } from 'react'
+import { toast } from 'sonner'
+import { updateThemeAction } from '@/actions/theme.actions'
+import { DEFAULT_THEME, THEMES } from '@/lib/themes'
+import { ThemeId } from '@/types/theme.types'
 
-const THEMES = [
-  { id: 'default', label: 'Default (White)' },
-  { id: 'warm-cream', label: 'A — Warm Cream' },
-  { id: 'dark-sections', label: 'B — Dark Sections' },
-  { id: 'gold-tint', label: 'C — Gold Tint' },
-  { id: 'full-dark', label: 'D — Full Dark' },
-  { id: 'combined', label: 'E — Combined (B+C)' },
-  { id: 'dashboard-warm', label: 'F — Dashboard Warm' },
-  { id: 'charcoal-gold', label: 'G — Charcoal Gold' },
-  { id: 'midnight-gold', label: 'H — Midnight Gold' },
-  { id: 'deep-navy', label: 'I — Deep Navy' },
-  { id: 'mob-signature', label: 'J — MOB Signature ⭐' },
-]
+interface Props {
+  currentTheme: ThemeId
+}
 
-export function ThemeSwitcher() {
-  const [active, setActive] = useState('default')
+export function ThemeSwitcher({ currentTheme }: Props) {
+  const [active, setActive] = useState<ThemeId>(currentTheme)
   const [open, setOpen] = useState(false)
+  const [pending, startTransition] = useTransition()
 
-  useEffect(() => {
+  function applyToPage(theme: ThemeId) {
     const html = document.documentElement
-    if (active === 'default') {
-      html.removeAttribute('data-theme')
-    } else {
-      html.setAttribute('data-theme', active)
-    }
-  }, [active])
+    if (theme === DEFAULT_THEME) html.removeAttribute('data-theme')
+    else html.setAttribute('data-theme', theme)
+  }
+
+  function handleSelect(theme: ThemeId) {
+    const previous = active
+    setActive(theme)
+    setOpen(false)
+    applyToPage(theme)
+
+    startTransition(async () => {
+      const result = await updateThemeAction(theme)
+      if (result.error) {
+        setActive(previous)
+        applyToPage(previous)
+        toast.error(result.error)
+        return
+      }
+      toast.success('Website theme updated for all visitors')
+    })
+  }
 
   return (
-    <div className="fixed bottom-24 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-50">
       {open && (
         <div className="mb-2 bg-white border border-black/10 shadow-lifted rounded overflow-hidden">
           {THEMES.map((theme) => (
             <button
               key={theme.id}
-              onClick={() => {
-                setActive(theme.id)
-                setOpen(false)
-              }}
+              onClick={() => handleSelect(theme.id)}
               className={`block w-full text-left px-4 py-2.5 text-xs font-medium transition-colors ${
                 active === theme.id
                   ? 'bg-[#C9A24B] text-white'
@@ -53,9 +60,10 @@ export function ThemeSwitcher() {
       )}
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 bg-black text-white px-4 py-2.5 text-xs font-medium shadow-lifted hover:bg-[#C9A24B] transition-colors"
+        disabled={pending}
+        className="flex items-center gap-2 bg-black text-white px-4 py-2.5 text-xs font-medium shadow-lifted hover:bg-[#C9A24B] transition-colors disabled:opacity-60"
       >
-        🎨 Theme
+        {pending ? 'Saving...' : 'Website Theme'}
       </button>
     </div>
   )

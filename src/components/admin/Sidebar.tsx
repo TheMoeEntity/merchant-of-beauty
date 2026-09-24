@@ -4,11 +4,13 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOutAction } from '@/actions/auth.actions'
 import { SessionUser } from '@/types/auth.types'
+import { Logo } from '@/components/shop/Logo'
 
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'Overview' },
   { href: '/dashboard/orders', label: 'Orders' },
   { href: '/dashboard/invoices', label: 'Invoices' },
+  { href: '/dashboard/reviews', label: 'Reviews' },
   { href: '/dashboard/staff', label: 'Staff', ownerOnly: true },
 ]
 
@@ -18,9 +20,7 @@ export function Sidebar({ user }: { user: SessionUser }) {
   return (
     <aside className="w-64 bg-[var(--color-sidebar-dark)] text-[var(--color-surface)] flex flex-col">
       <div className="px-6 py-7 border-b border-[var(--color-surface)]/10">
-        <p className="font-display text-xl text-[var(--color-gold)]">
-          Merchant of Beauty
-        </p>
+        <Logo height={56} />
         <p className="text-xs text-[var(--color-surface)]/50 mt-1">Dashboard</p>
       </div>
 

@@ -5,6 +5,7 @@ import { useCartStore } from '@/store/cart.store'
 import { useCartDrawer } from '@/store/cart-drawer.store'
 import { ShoppingBag } from 'lucide-react'
 import { MobileMenu } from './MobileMenu' // Import your mobile menu
+import { Logo } from './Logo'
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -38,9 +39,8 @@ export default function Navbar() {
         </div>
 
         {/* Center - Logo */}
-        <Link href="/" className="font-display text-2xl text-ink">
-          <span className="hidden md:block">Merchant of Beauty</span>
-          <span className="md:hidden">M.O.B</span>
+        <Link href="/" aria-label="Merchant of Beauty home">
+          <Logo height={44} priority />
         </Link>
 
         {/* Right side - Cart */}

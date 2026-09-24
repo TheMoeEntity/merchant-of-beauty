@@ -176,7 +176,9 @@ async function seedSiteSettings() {
     storeName: 'Merchant of Beauty',
     contactEmail: 'hello@merchantofbeauty.com',
     contactPhone: '+234 800 000 0000',
-    address: 'Lagos, Nigeria',
+    address: 'A5 Plateau Plaza, Trade Fair Complex, Lagos',
+    showroomAddress:
+      'Nze Odera Plaza, Sea Breeze, beside Polystar Building, Trade Fair Complex, Lagos',
   })
   console.log('  ✓ Site settings')
 }

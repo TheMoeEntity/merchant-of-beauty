@@ -1,8 +1,16 @@
+import type { Metadata } from 'next'
 import { getProducts, getCategories } from '@/sanity/queries'
 import ProductsClient from '@/components/shop/ProductsClient'
 
 interface Props {
   searchParams: Promise<{ category?: string }>
+}
+
+export const metadata: Metadata = {
+  title: 'Shop Spa, Salon & Tattoo Equipment',
+  description:
+    'Browse premium spa, salon and tattoo equipment from Merchant of Beauty. Nationwide delivery across Nigeria.',
+  alternates: { canonical: '/products' },
 }
 
 export default async function ShopPage({ searchParams }: Props) {

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getSiteSettings } from '@/sanity/queries'
+import { Logo } from '@/components/shop/Logo'
 import { SiInstagram, SiFacebook, SiX } from '@icons-pack/react-simple-icons'
 
 export async function Footer() {
@@ -9,9 +10,9 @@ export async function Footer() {
     <footer className="mt-20 border-t border-[var(--color-ink)]/10 bg-[var(--color-gold-light)]/40">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-3">
         <div>
-          <h3 className="font-display text-xl text-[var(--color-ink)] mb-2">
-            {settings?.storeName ?? 'Merchant of Beauty'}
-          </h3>
+          <Link href="/" className="inline-block mb-3" aria-label="Home">
+            <Logo height={64} />
+          </Link>
           <p className="text-xs text-[var(--color-muted)] leading-relaxed mb-4">
             Premium spa, salon & aesthetic equipment. Nationwide delivery across
             Nigeria.
@@ -126,7 +127,22 @@ export async function Footer() {
                 </Link>
               </li>
             )}
-            {settings?.address && <li>{settings.address}</li>}
+            {settings?.address && (
+              <li>
+                <span className="block text-[var(--color-ink)] font-medium">
+                  Office
+                </span>
+                {settings.address}
+              </li>
+            )}
+            {settings?.showroomAddress && (
+              <li>
+                <span className="block text-[var(--color-ink)] font-medium">
+                  Showroom
+                </span>
+                {settings.showroomAddress}
+              </li>
+            )}
           </ul>
         </div>
       </div>

@@ -30,6 +30,8 @@ export interface SiteSettings {
   contactEmail: string | null
   contactPhone: string | null
   address: string | null
+  showroomAddress: string | null
+  theme: string | null
   whatsapp: string | null
   instagram: string | null
   twitter: string | null
