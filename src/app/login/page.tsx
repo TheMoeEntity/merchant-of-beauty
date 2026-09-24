@@ -1,7 +1,13 @@
+import type { Metadata } from 'next'
 import Navbar from '@/components/shop/Navbar'
 import { Footer } from '@/components/shop/Footer'
 import LoginForm from '@/components/shop/LoginForm'
 import { Logo } from '@/components/shop/Logo'
+
+export const metadata: Metadata = {
+  title: 'Staff Login',
+  robots: { index: false, follow: false },
+}
 
 export default function LoginPage() {
   return (

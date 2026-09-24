@@ -5,7 +5,12 @@ import ProductGallery from '@/components/shop/ProductGallery'
 import { StarRating } from '@/components/shop/StarRating'
 import { ProductReviews } from '@/components/shop/ProductReviews'
 import { getProductBySlug, getProducts } from '@/sanity/queries'
-import { getRatingSummaryForProduct } from '@/services/review.service'
+import {
+  getApprovedReviewsForProduct,
+  getRatingSummaryForProduct,
+} from '@/services/review.service'
+import { JsonLd } from '@/components/shop/JsonLd'
+import { buildBreadcrumbJsonLd, buildProductJsonLd } from '@/lib/seo'
 import { formatNaira } from '@/lib/utils'
 import { urlFor } from '@/sanity/lib/image'
 
@@ -50,10 +55,32 @@ export default async function ProductPage({ params }: Props) {
 
   if (!product) notFound()
 
-  const ratingSummary = await getRatingSummaryForProduct(product._id)
+  const [ratingSummary, reviews] = await Promise.all([
+    getRatingSummaryForProduct(product._id),
+    getApprovedReviewsForProduct(product._id),
+  ])
+
+  const imageUrls = product.images.map((img) =>
+    urlFor(img).width(1200).url()
+  )
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
+      <JsonLd
+        data={[
+          buildProductJsonLd({
+            product,
+            imageUrls,
+            summary: ratingSummary,
+            reviews,
+          }),
+          buildBreadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Shop', path: '/products' },
+            { name: product.title, path: `/products/${product.slug.current}` },
+          ]),
+        ]}
+      />
       <div className="grid md:grid-cols-2 gap-12">
         <ProductGallery images={product.images} title={product.title} />
 
@@ -103,6 +130,8 @@ export default async function ProductPage({ params }: Props) {
         productId={product._id}
         productSlug={product.slug.current}
         productTitle={product.title}
+        reviews={reviews}
+        summary={ratingSummary}
       />
     </div>
   )

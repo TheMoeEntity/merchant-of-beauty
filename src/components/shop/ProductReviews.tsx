@@ -1,26 +1,22 @@
-import {
-  getApprovedReviewsForProduct,
-  getRatingSummaryForProduct,
-} from '@/services/review.service'
 import { StarRating } from '@/components/shop/StarRating'
 import { ReviewForm } from '@/components/shop/ReviewForm'
+import { ProductRatingSummary, Review } from '@/types/review.types'
 
 interface Props {
   productId: string
   productSlug: string
   productTitle: string
+  reviews: Review[]
+  summary: ProductRatingSummary
 }
 
-export async function ProductReviews({
+export function ProductReviews({
   productId,
   productSlug,
   productTitle,
+  reviews,
+  summary,
 }: Props) {
-  const [reviews, summary] = await Promise.all([
-    getApprovedReviewsForProduct(productId),
-    getRatingSummaryForProduct(productId),
-  ])
-
   return (
     <div className="max-w-6xl mx-auto px-6 py-16 border-t border-[var(--color-ink)]/10">
       <div className="flex items-center gap-3 mb-10">

@@ -7,6 +7,9 @@ import { getFeaturedProducts, getHeroBanner } from '@/sanity/queries'
 import { urlFor } from '@/sanity/lib/image'
 import { getProducts } from '@/sanity/queries'
 import { CategoryStrip } from '@/components/shop/CategoryStrip'
+import { JsonLd } from '@/components/shop/JsonLd'
+import { getSiteSettings } from '@/sanity/queries'
+import { buildOrganizationJsonLd } from '@/lib/seo'
 
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
@@ -177,9 +180,15 @@ function FeaturedSkeleton() {
   )
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const settings = await getSiteSettings()
+
   return (
     <>
+      <JsonLd data={buildOrganizationJsonLd(settings)} />
+      <h1 className="sr-only">
+        Merchant of Beauty: Spa, Salon &amp; Tattoo Equipment in Nigeria
+      </h1>
       <Suspense fallback={<HeroSkeleton />}>
         <HeroSection />
       </Suspense>

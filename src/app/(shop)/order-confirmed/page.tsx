@@ -1,8 +1,14 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getSiteSettings } from '@/sanity/queries'
 
 interface Props {
   searchParams: Promise<{ orderId?: string; customerName?: string }>
+}
+
+export const metadata: Metadata = {
+  title: 'Order Confirmed',
+  robots: { index: false, follow: false },
 }
 
 export default async function OrderConfirmedPage({ searchParams }: Props) {

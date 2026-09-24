@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { auth } from '@/lib/auth'
 import { Sidebar } from '@/components/admin/Sidebar'
@@ -6,6 +7,11 @@ import { SessionUser } from '@/types/auth.types'
 import { ThemeSwitcher } from '@/components/admin/ThemeSwitcher'
 import { getSiteSettings } from '@/sanity/queries'
 import { resolveTheme } from '@/lib/themes'
+
+export const metadata: Metadata = {
+  title: { default: 'Dashboard', template: '%s | Dashboard' },
+  robots: { index: false, follow: false },
+}
 
 export default async function DashboardLayout({
   children,

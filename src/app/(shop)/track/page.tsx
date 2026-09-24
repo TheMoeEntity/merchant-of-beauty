@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { getOrderById } from '@/services/order.service'
 import { formatNaira } from '@/lib/utils'
 import { RefreshButton } from '@/components/shop/RefreshButton'
@@ -150,6 +151,11 @@ async function OrderDetails({ orderId }: { orderId: string }) {
       </div>
     </div>
   )
+}
+
+export const metadata: Metadata = {
+  title: 'Track Your Order',
+  robots: { index: false, follow: false },
 }
 
 export default async function TrackPage({ searchParams }: Props) {
