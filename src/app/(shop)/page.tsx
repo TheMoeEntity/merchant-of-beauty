@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -6,6 +7,10 @@ import { getFeaturedProducts, getHeroBanner } from '@/sanity/queries'
 import { urlFor } from '@/sanity/lib/image'
 import { getProducts } from '@/sanity/queries'
 import { CategoryStrip } from '@/components/shop/CategoryStrip'
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+}
 
 function HeroTile({
   tile,
