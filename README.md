@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Merchant of Beauty
 
-## Getting Started
+Production eCommerce store for professional spa, salon and tattoo equipment in Lagos, Nigeria.
+Live at **[themerchantofbeauty.com](https://themerchantofbeauty.com)**. Built and shipped end to end by [Moses Nwigberi](https://mosesnwigberi.com).
 
-First, run the development server:
+Customers browse the catalogue, add items to a cart and place orders; the business confirms each order
+with the customer, moves it through fulfilment statuses and issues PDF invoices from a private dashboard.
+Catalogue content is managed by non-technical staff in Sanity.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Stack
+
+| Layer | Choice |
+| --- | --- |
+| Framework | Next.js 16 (App Router), React 19, TypeScript |
+| Styling | Tailwind CSS v4 |
+| Content | Sanity (embedded Studio at `/admin-studio`) |
+| Data | Neon PostgreSQL + Drizzle ORM |
+| Auth | Auth.js / NextAuth v5 (JWT sessions, owner and staff roles) |
+| Client state | Zustand (cart) |
+| Validation | Zod |
+| Rate limiting | Redis |
+| Documents | `@react-pdf/renderer` (invoices) |
+| Hosting | Vercel (including cron) |
+
+## Architecture
+
+```
+src/
+├── app/
+│   ├── (shop)/          storefront: home, products, product detail, checkout, order tracking
+│   ├── (admin)/         dashboard: orders, invoices, reviews, staff
+│   ├── admin-studio/    embedded Sanity Studio
+│   └── api/             external callers only: Sanity webhook, cron, PDF streams
+├── actions/             Server Actions — thin: auth check, Zod validation, call a service
+├── services/            business logic and database access
+├── lib/                 db client, auth config, SEO builders, rate limiter, shared utils
+├── components/          shop/ and admin/ UI
+├── store/               Zustand stores
+└── types/               shared types
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Two sources of truth, split by who edits them.** Product content (titles, prices, images, stock)
+lives in Sanity so staff can edit it without a developer. Transactional data (orders, invoices,
+reviews, users) lives in PostgreSQL, where it gets relational integrity and transactions.
+Orders store a snapshot of each product's name and price, so editing or deleting a product
+never rewrites past orders.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Mutations go through Server Actions; API routes are only for external callers.** UI-triggered
+writes (checkout, status updates, reviews, staff management) are Server Actions that validate with
+Zod and delegate to the service layer. Route handlers exist only for things a browser form can't
+call: the Sanity webhook, the Vercel cron job and binary PDF downloads.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Rendering and caching
 
-## Learn More
+- Product pages are statically generated with `generateStaticParams` and served from cache.
+- **On-demand revalidation:** a Sanity webhook hits `/api/revalidate`, which maps the changed
+  document type to cache tags and calls `revalidateTag`. Price or stock edits go live within
+  seconds, with no redeploy and no time-based revalidation.
+- The home page streams its sections behind `<Suspense>` with matching skeletons, so a slow
+  query never blocks the rest of the page.
+- Images go through `next/image` (Sanity CDN), fonts through `next/font`.
 
-To learn more about Next.js, take a look at the following resources:
+## Technical SEO
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `generateMetadata` per product (title, description, OpenGraph image) and canonical URLs on
+  every storefront route.
+- JSON-LD built by typed helpers in `src/lib/seo.ts`: Product with Offer, AggregateRating and
+  Review; BreadcrumbList; Store (with addresses) and WebSite.
+- `sitemap.ts` generated from the live catalogue; `robots.ts` keeps the dashboard, checkout and
+  Studio out of the index.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Reliability and security
 
-## Deploy on Vercel
+- **Atomic orders:** order creation writes the order and all its line items inside one
+  `db.transaction`. Neon's HTTP driver can't run transactions, so the app uses the
+  WebSocket driver (`neon-serverless`).
+- **Rate limiting:** Redis `INCR` + `PEXPIRE` fixed-window limiter on public writes (order
+  placement and reviews).
+- **Role-based access:** owner-only actions (staff management, site theme) are re-checked
+  inside each Server Action, not only in the UI.
+- **Housekeeping cron:** a daily Vercel cron, authenticated with a Bearer secret, removes
+  unconfirmed orders that have been pending for 48 hours.
+- **Review moderation:** reviews are hidden until approved in the dashboard.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Running locally
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm install
+cp .env.example .env.local   # fill in the values
+npm run db:push              # create tables
+npm run db:seed              # create the owner account from SEED_OWNER_* vars
+npm run sanity:seed          # optional: sample catalogue
+npm run dev
+```
+
+Shop at `http://localhost:3000`, dashboard at `/login`, Studio at `/admin-studio`.
